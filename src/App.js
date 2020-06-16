@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Home from './components/pages/Home';
+import About from './components/pages/About';
+import Leaderboard from './components/pages/Leaderboard';
+import Quizzes from './components/quizzes/Quizzes';
+import Quiz from './components/quizzes/Quiz';
+import QuizState from './context/quiz/QuizState';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QuizState>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className='container'>
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route exact path='/quiz' component={Quizzes} />
+              <Route exact path='/leaderboard' component={Leaderboard} />
+              <Route exact path='/about' component={About} />
+              <Route exact path='/quiz/:id' component={Quiz} />
+            </Switch>
+          </div>
+        </div>
+      </Router>
+    </QuizState>
   );
 }
 
