@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
-@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Oxygen);
+@import url(https://fonts.googleapis.com/css?family=Open + Sans + Condensed:300|Oxygen);
 
 /* Global Styles */
 :root {
@@ -157,6 +157,23 @@ table.ranking tfoot td {
     text-align: left;
     line-height: 15px;
     padding: 15px 20px;
+}
+
+.form-group input {
+    margin: 0.2rem 0;
+}
+
+.form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    overflow: hidden;
+    padding: 0 2rem;
+}
+
+.form-container h1,
+h2,
+h3 {
+    text-align: center;
 }
 
 /* Utilities */
@@ -575,12 +592,12 @@ table {
     }
 
     h1 {
-      font-size: 34px;
-      line-height: 36px;
-      padding-left: 15px;
-  }
+        font-size: 34px;
+        line-height: 36px;
+        padding-left: 15px;
+    }
 
-  table.ranking {
-      font-size: 0.8em;
-  }
+    table.ranking {
+        font-size: 0.8em;
+    }
 }
