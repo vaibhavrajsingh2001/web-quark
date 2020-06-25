@@ -1,7 +1,12 @@
-import { SET_QUIZ } from '../types';
+import { SET_QUIZ, SET_QUIZZES } from '../types';
 
 export default (state, action) => {
     switch (action.type) {
+        case SET_QUIZZES:
+            return {
+                ...state,
+                quizzes: action.payload
+            };
         case SET_QUIZ:
             return {
                 ...state,

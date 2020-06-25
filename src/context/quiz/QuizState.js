@@ -2,51 +2,33 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import QuizContext from './quizContext';
 import quizReducer from './quizReducer';
-import { SET_QUIZ } from '../types';
+import { SET_QUIZ, SET_QUIZZES } from '../types';
 
 const QuizState = (props) => {
     const initialState = {
-        quizzes: [
-            {
-                id: 1,
-                category: 'Random quiz',
-                link: 'https://opentdb.com/api.php?amount=10&type=multiple',
-            },
-            {
-                id: 2,
-                category: 'General Knowledge Quiz',
-                link: 'https://opentdb.com/api.php?amount=10&category=9&type=multiple',
-            },
-            {
-                id: 3,
-                category: 'Entertainment: Books',
-                link: 'https://opentdb.com/api.php?amount=10&category=10&type=multiple',
-            },
-            {
-                id: 4,
-                category: 'Science & Nature quiz',
-                link: 'https://opentdb.com/api.php?amount=10&category=17&type=multiple',
-            },
-            {
-                id: 5,
-                category: 'Mythology quiz',
-                link: 'https://opentdb.com/api.php?amount=10&category=20&type=multiple',
-            },
-        ],
+        quizzes: [],
         currentQuiz: [],
     };
 
     const [state, dispatch] = useReducer(quizReducer, initialState);
 
+    // fetch all quizzes
+    const getAllQuizzes = async () => {
+        const res = await axios.get('/api/quiz');
+        console.log(res.data);
+        if(res) {
+            dispatch({type: SET_QUIZZES, payload: res.data})
+        }
+    };
+
     // fetch individual quiz
     const getQuiz = async (id) => {
-        const link = state.quizzes[id-1].link;
-        const res = await axios.get(link);
-        console.log(res.data.results);
+        const res = await axios.get(`/api/quiz/${id}`);
+        console.log(res.data);
         if (res) {
             dispatch({
                 type: SET_QUIZ,
-                payload: res.data.results,
+                payload: res.data,
             });
         }
     };
@@ -57,6 +39,7 @@ const QuizState = (props) => {
                 quizzes: state.quizzes,
                 currentQuiz: state.currentQuiz,
                 getQuiz,
+                getAllQuizzes
             }}
         >
             {props.children}

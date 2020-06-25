@@ -6,6 +6,7 @@ import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Leaderboard from './components/pages/Leaderboard';
 import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 import Quizzes from './components/quizzes/Quizzes';
 import Quiz from './components/quizzes/Quiz';
 
@@ -39,6 +40,11 @@ function App() {
                                     exact
                                     path="/register"
                                     component={Register}
+                                ></Route>
+                                <Route
+                                    exact
+                                    path="/login"
+                                    component={Login}
                                 ></Route>
                             </Switch>
                         </div>
