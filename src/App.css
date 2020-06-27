@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
-@import url(https://fonts.googleapis.com/css?family=Open + Sans + Condensed:300|Oxygen);
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Oxygen');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700');
 
 /* Global Styles */
 :root {
@@ -20,7 +21,7 @@ body {
     font-family: 'Oxygen', sans-serif;
     font-size: 1rem;
     line-height: 1.6;
-    background-color: #121212;
+    background-color: #1f2739;
     color: #ececec;
     height: 100%;
 }
@@ -64,99 +65,74 @@ p {
     margin: 20px 0 5px 0;
 }
 
-table.ranking {
-    margin: 20px 0 0 0;
-    border-collapse: collapse;
-    border-spacing: 0;
-    background: #212121;
-    color: #fff;
-}
-
-table.ranking th,
-table.ranking td {
+table {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.42em;
+    color: #a7a1ae;
+    background-color: #1f2739;
     text-align: center;
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+    display: table;
+    padding: 0 0 8em 0;
 }
 
-table.ranking thead {
-    line-height: 12px;
-    background: #2e63e7;
-    text-transform: uppercase;
-}
-
-table.ranking thead th {
-    color: #fff;
-    padding: 10px;
-    letter-spacing: 1px;
-    vertical-align: bottom;
-}
-
-table.ranking thead th:nth-child(1) {
-    width: 20%;
-    text-align: left;
-    padding-left: 20px;
-}
-
-table.ranking thead th:nth-child(2) {
-    width: 30%;
-}
-
-table.ranking thead th:nth-child(3) {
-    width: 35%;
-}
-
-table.ranking thead th:nth-child(4) {
-    width: 15%;
-}
-
-table.ranking tbody {
+table h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
     font-size: 1em;
-    line-height: 15px;
+    color: #4dc3fa;
 }
 
-table.ranking tbody tr {
-    border-top: 2px solid rgba(109, 176, 231, 0.8);
-    transition: background 0.6s, color 0.6s;
+table td {
+    padding-bottom: 2%;
+    padding-top: 2%;
+    padding-left: 2%;
+    font-weight: normal;
+    font-size: 1em;
+    -webkit-box-shadow: 0 2px 2px -2px #0e1119;
+    -moz-box-shadow: 0 2px 2px -2px #0e1119;
+    box-shadow: 0 2px 2px -2px #0e1119;
 }
 
-table.ranking tbody tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.2);
+table th {
+    background-color: #1f2739;
 }
 
-table.ranking tbody tr:hover {
-    color: #000;
-    background: rgba(255, 255, 255, 0.7);
-    font-weight: 900;
+table td:first-child {
+    color: #fb667a;
 }
 
-table.ranking tbody td {
-    padding: 12px;
+table tr:nth-child(odd) {
+    background-color: #323c50;
 }
 
-table.ranking tbody tr:hover td:first-child {
-    background: rgba(0, 0, 0, 0);
+table tr:nth-child(even) {
+    background-color: #2c3446;
 }
 
-table.ranking tbody td:first-child {
-    text-align: left;
-    padding-left: 20px;
-    font-weight: 700;
-    background: rgba(109, 176, 231, 0.35);
-    transition: backgrounf 0.6s;
+table tr:hover {
+    background-color: #464a52;
+    -webkit-box-shadow: 0 6px 6px -6px #0e1119;
+    -moz-box-shadow: 0 6px 6px -6px #0e1119;
+    box-shadow: 0 6px 6px -6px #0e1119;
 }
 
-table.ranking tfoot {
-    font-size: 0.8em;
-}
+table td:hover {
+    background-color: #fff842;
+    color: #403e10;
+    font-weight: bold;
 
-table.ranking tfoot tr {
-    border-top: 2px solid #2e63e7;
-}
+    box-shadow: #7f7c21 -1px 1px, #7f7c21 -2px 2px, #7f7c21 -3px 3px,
+        #7f7c21 -4px 4px, #7f7c21 -5px 5px, #7f7c21 -6px 6px;
+    transform: translate3d(6px, -6px, 0);
 
-table.ranking tfoot td {
-    color: rgba(255, 255, 215, 0.6);
-    text-align: left;
-    line-height: 15px;
-    padding: 15px 20px;
+    transition-delay: 0s;
+    transition-duration: 0.4s;
+    transition-property: all;
+    transition-timing-function: line;
 }
 
 .form-group input {
@@ -511,16 +487,6 @@ button {
     font: inherit;
 }
 
-table th,
-table td {
-    padding: 7px;
-    text-align: left;
-}
-
-table {
-    background: var(--light-color);
-}
-
 /* Navbar */
 .navbar {
     font-family: 'Crimson Text', serif;
@@ -597,7 +563,8 @@ table {
         padding-left: 15px;
     }
 
-    table.ranking {
-        font-size: 0.8em;
+    table td:nth-child(4),
+    table th:nth-child(4) {
+        display: none;
     }
 }

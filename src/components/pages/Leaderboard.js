@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import Spinner from '../layout/Spinner';
+import QuizContext from '../../context/quiz/quizContext';
 
 const Leaderboard = () => {
+    const quizContext = useContext(QuizContext);
+    const { getLeaderboard, leaderboard } = quizContext;
+
+    useEffect(() => {
+        getLeaderboard();
+        // eslint-disable-next-line
+    }, []);
+
+    if (leaderboard.length < 1) {
+        return <Spinner />;
+    }
+
     return (
-            <table className="ranking">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Username</th>
-                    </tr>
-                </thead>
-                {/*<tfoot>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <h1>Rank</h1>
+                    </th>
+                    <th>
+                        <h1>Username</h1>
+                    </th>
+                    <th>
+                        <h1>Score</h1>
+                    </th>
+                </tr>
+            </thead>
+            {/*<tfoot>
                     <tr>
                         <td colSpan="4">
                             <p>
@@ -18,49 +39,16 @@ const Leaderboard = () => {
                         </td>
                     </tr>
                 </tfoot>*/}
-                <tbody>
+            <tbody>
+                {leaderboard.map((el, index) => (
                     <tr>
-                        <td>1</td>
-                        <td>hutleydearg</td>
+                        <td>{index}</td>
+                        <td>{el.name}</td>
+                        <td>{el.score}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>trackballl</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>tuilleslift</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>kerfufflemargin</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>blazecandle</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>maimed</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>swittertender</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>venomoustux</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>unclecolumbia</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>dingyprofit</td>
-                    </tr>
-                </tbody>
-            </table>
+                ))}
+            </tbody>
+        </table>
     );
 };
 

@@ -2,12 +2,13 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import QuizContext from './quizContext';
 import quizReducer from './quizReducer';
-import { SET_QUIZ, SET_QUIZZES } from '../types';
+import { SET_QUIZ, SET_QUIZZES, SET_LEADERBOARD } from '../types';
 
 const QuizState = (props) => {
     const initialState = {
         quizzes: [],
         currentQuiz: [],
+        leaderboard: [],
     };
 
     const [state, dispatch] = useReducer(quizReducer, initialState);
@@ -15,16 +16,14 @@ const QuizState = (props) => {
     // fetch all quizzes
     const getAllQuizzes = async () => {
         const res = await axios.get('/api/quiz');
-        console.log(res.data);
-        if(res) {
-            dispatch({type: SET_QUIZZES, payload: res.data})
+        if (res) {
+            dispatch({ type: SET_QUIZZES, payload: res.data });
         }
     };
 
     // fetch individual quiz
     const getQuiz = async (id) => {
         const res = await axios.get(`/api/quiz/${id}`);
-        console.log(res.data);
         if (res) {
             dispatch({
                 type: SET_QUIZ,
@@ -33,13 +32,45 @@ const QuizState = (props) => {
         }
     };
 
+    // fetch leaderboard
+    const getLeaderboard = async () => {
+        try {
+            const res = await axios.get('/api/score');
+            if (res) {
+                console.log(res.data);
+                dispatch({ type: SET_LEADERBOARD, payload: res.data });
+            }
+        } catch (err) {
+            console.err(err);
+        }
+    };
+
+    // update total score of user
+    const sendScore = async (score) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        try {
+            const res = await axios.post('/api/score', score, config);
+            console.log(res.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <QuizContext.Provider
             value={{
                 quizzes: state.quizzes,
                 currentQuiz: state.currentQuiz,
+                leaderboard:state.leaderboard,
                 getQuiz,
-                getAllQuizzes
+                getAllQuizzes,
+                getLeaderboard,
+                sendScore,
             }}
         >
             {props.children}

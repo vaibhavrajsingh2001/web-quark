@@ -1,35 +1,52 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/auth/authContext';
 
-const Navbar = ({ title }) => {
+const Navbar = () => {
+    const authContext = useContext(AuthContext);
+    const { isAuthenticated, user, logout } = authContext;
+
+    const onLogout = () => logout();
+
+    const loggedInLinks = (
+        <Fragment>
+            <li>
+                <Link to="/">Hello {user && user.name}</Link>
+            </li>
+            <li>
+                <Link to="/quiz">Quizzes</Link>
+            </li>
+            <li>
+                <a onClick={onLogout} href="#!" >Logout</a>
+            </li>
+        </Fragment>
+    );
+
+    const guestLinks = (
+        <Fragment>
+            <li>
+                <Link to="/">Home</Link>
+            </li>
+            <li>
+                <Link to="/login">Login</Link>
+            </li>
+            <li>
+                <Link to="/register">Register</Link>
+            </li>
+        </Fragment>
+    );
+
     return (
         <nav className="navbar bg-primary">
-            <h1>{title}</h1>
-            <ul className='list'>
+            <h1>Web Quark</h1>
+            <ul className="list">
+                {isAuthenticated ? loggedInLinks : guestLinks}
                 <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/quiz">Quizzes</Link>
-                </li>
-                <li>
-                    <Link to="/register">Register</Link>
-                </li>
-                <li>
-                    <Link to="/about">About</Link>
+                <Link to='/leaderboard'>Leaderboard</Link>
                 </li>
             </ul>
         </nav>
     );
-};
-
-Navbar.defaultProps = {
-    title: 'Web Quark',
-};
-
-Navbar.propTypes = {
-    title: PropTypes.string.isRequired,
 };
 
 export default Navbar;
