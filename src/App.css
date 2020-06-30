@@ -557,6 +557,10 @@ button {
         justify-content: center;
     }
 
+    .navbar a{
+        font-size: 1em;
+    }
+
     h1 {
         font-size: 34px;
         line-height: 36px;

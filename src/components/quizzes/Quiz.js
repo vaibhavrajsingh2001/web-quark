@@ -8,41 +8,70 @@ const Quiz = () => {
     const { currentQuiz, getQuiz, sendScore } = quizContext;
 
     let { id } = useParams();
-    let score = 0;
+
+    let count = 0;
 
     useEffect(() => {
         getQuiz(id);
         // eslint-disable-next-line
-    }, [id]);
+    }, []);
 
     const [userAnswers, setUserAnswers] = useState([]);
     const [quizComplete, setQuizComplete] = useState(false);
+    const [score, setScore] = useState(0);
+    const [index, setIndex] = useState(0);
 
     const { quizData, name } = currentQuiz;
-    if (quizData && !quizComplete) {
-        const questions = quizData.map((el) => el.question);
-        const answers = quizData.map((el) => el.answer);
+    if (!quizData) return <Spinner />;
 
-        const onChange = (e) => {
-            let newUserAnswers = [...userAnswers];
-            newUserAnswers[e.target.name] = e.target.value;
-            setUserAnswers([...newUserAnswers]);
-        };
+    const questions = quizData.map((el) => el.question);
+    const answers = quizData.map((el) => el.answer);
 
-        const onSubmit = (e) => {
+    const onChange = (e) => {
+        let newUserAnswers = [...userAnswers];
+        newUserAnswers[e.target.name] = e.target.value;
+        setUserAnswers([...newUserAnswers]);
+    };
+
+    const onSubmit = (e) => {
+        if (e) {
             e.preventDefault();
-            score = 0;
+        }
 
-            for (let i = 0; i < answers.length; i++) {
-                if (answers[i].toUpperCase() === userAnswers[i].toUpperCase()) {
-                    score = score + 1;
+        for (let i = 0; i < userAnswers.length; i++) {
+            if (typeof userAnswers[i] !== 'undefined') {
+                if (
+                    answers[i].toString().toUpperCase() ===
+                    userAnswers[i].toString().toUpperCase()
+                ) {
+                    count = count + 10;
+                    console.log(
+                        'Equal' +
+                            userAnswers[i] +
+                            ' ' +
+                            answers[i] +
+                            ' ' +
+                            count
+                    );
                 }
             }
+        }
+        setScore(count);
+        setQuizComplete(true);
+        sendScore(count);
+    };
 
-            setQuizComplete(true);
-            sendScore({ points: score });
-        };
+    // timer to change questions
+    let timer = setTimeout(() => {
+        setIndex(index + 1);
+    }, 100000);
 
+    if (index >= questions.length && !quizComplete) {
+        clearTimeout(timer);
+        onSubmit();
+    }
+
+    if (!quizComplete && index < questions.length) {
         return (
             <Fragment>
                 <div className="form-container">
@@ -51,29 +80,39 @@ const Quiz = () => {
                     <br />
                     <form onSubmit={onSubmit}>
                         <div className="form-group">
-                            {questions.map((question, index) => (
-                                <Fragment key={index}>
-                                    <label htmlFor={index}>Q. {question}</label>
-                                    <input
-                                        type="text"
-                                        name={index}
-                                        onChange={onChange}
-                                    ></input>
-                                    <hr />
-                                    <br />
-                                </Fragment>
-                            ))}
+                            {quizData[index].imageLink && (
+                                <img
+                                    src={quizData[index].imageLink} style={{height:'300px'}}
+                                    alt="img for question"
+                                ></img>
+                            )}
+                            <label htmlFor={index}>Q. {questions[index]}</label>
+                            <input
+                                type="text"
+                                name={index}
+                                onChange={onChange}
+                            ></input>
+                            <br />
+                            <span
+                                className="btn btn-dark"
+                                onClick={() => setIndex(index + 1)}
+                            >
+                                Next question
+                            </span>
                         </div>
                         <input
                             type="submit"
                             value="Submit Quiz"
-                            className="btn btn-dark"
+                            className="btn btn-danger"
                         ></input>
                     </form>
                 </div>
             </Fragment>
         );
-    } else if (quizComplete) {
+    }
+
+    if (quizComplete || index >= questions.length) {
+        clearTimeout(timer);
         return (
             <Fragment>
                 <div className="container-small">
@@ -86,8 +125,6 @@ const Quiz = () => {
             </Fragment>
         );
     }
-
-    return <Spinner />;
 };
 
 export default Quiz;

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
+import quizImg from './quiz.jpg';
 
 const Home = () => {
     const authContext = useContext(AuthContext);
@@ -15,20 +15,8 @@ const Home = () => {
     return (
         <Fragment>
             <div className="container-small">
-                <Link
-                    to="/quiz"
-                    className="btn btn-dark my-1"
-                    style={{ fontSize: '30px' }}
-                >
-                    Go To Quizzes
-                </Link>
-                <Link
-                    to="/leaderboard"
-                    className="btn btn-dark my-1"
-                    style={{ fontSize: '30px' }}
-                >
-                    Go To leaderboard
-                </Link>
+                <h1><span className='text-primary'>Hi!</span> Welcome to web-quark!</h1>
+                <img alt='quiz' src={quizImg}></img>
             </div>
         </Fragment>
     );

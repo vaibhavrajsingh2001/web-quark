@@ -41,8 +41,8 @@ const Leaderboard = () => {
                 </tfoot>*/}
             <tbody>
                 {leaderboard.map((el, index) => (
-                    <tr>
-                        <td>{index}</td>
+                    <tr key={index}>
+                        <td>{index+1}</td>
                         <td>{el.name}</td>
                         <td>{el.score}</td>
                     </tr>

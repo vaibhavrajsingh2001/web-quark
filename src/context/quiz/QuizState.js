@@ -47,6 +47,7 @@ const QuizState = (props) => {
 
     // update total score of user
     const sendScore = async (score) => {
+        console.log(score);
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -54,7 +55,7 @@ const QuizState = (props) => {
         };
 
         try {
-            const res = await axios.post('/api/score', score, config);
+            const res = await axios.post('/api/score', {"points":score}, config);
             console.log(res.data);
         } catch (error) {
             console.error(error);
