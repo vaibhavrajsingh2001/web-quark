@@ -1,4 +1,10 @@
-import { SET_QUIZ, SET_QUIZZES, SET_LEADERBOARD } from '../types';
+import {
+    SET_QUIZ,
+    SET_QUIZZES,
+    SET_LEADERBOARD,
+    SET_QUIZ_FAIL,
+    CLEAR_ERRORS,
+} from '../types';
 
 export default (state, action) => {
     switch (action.type) {
@@ -17,6 +23,16 @@ export default (state, action) => {
                 ...state,
                 leaderboard: action.payload,
             };
+        case SET_QUIZ_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
+        case CLEAR_ERRORS:
+            return{
+                ...state,
+                error: null
+            }
         default:
             return state;
     }

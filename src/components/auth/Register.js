@@ -1,16 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react';
 import AuthContext from '../../context/auth/authContext';
+import AlertContext from '../../context/alert/alertContext';
 
 const Register = (props) => {
     const authContext = useContext(AuthContext);
-    const { register, isAuthenticated } = authContext;
+    const { error, clearErrors, register, isAuthenticated } = authContext;
+
+    const alertContext = useContext(AlertContext);
+    const { setAlert } = alertContext;
 
     useEffect(() => {
         if (isAuthenticated) {
             props.history.push('/');
         }
+        if (error === 'User already exists! Enter a different email.') {
+            setAlert(error, 'danger');
+            clearErrors();
+        }
         // eslint-disable-next-line
-    }, [isAuthenticated, props.history]);
+    }, [error, isAuthenticated, props.history]);
 
     const [user, setUser] = useState({
         name: '',
@@ -26,58 +34,64 @@ const Register = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        register({ name, email, password });
+        if (name === '' || email === '' || password === '') {
+            setAlert('Please enter all fields.', 'danger');
+        } else if (password !== confirmPassword) {
+            setAlert('Both passwords should be same.', 'danger');
+        } else {
+            register({ name, email, password });
+        }
     };
 
     return (
-        <div className='form-container'>
+        <div className="form-container">
             <h1>
-                Account <span className='text-primary'>Register</span>
+                Account <span className="text-primary">Register</span>
             </h1>
 
             <form onSubmit={onSubmit}>
-                <div className='form-group'>
-                    <label htmlFor='name'>Name</label>
+                <div className="form-group">
+                    <label htmlFor="name">Name</label>
                     <input
-                        type='text'
-                        name='name'
+                        type="text"
+                        name="name"
                         value={name}
                         onChange={onChange}
                         required
                     ></input>
 
-                    <label htmlFor='email'>Email-id</label>
+                    <label htmlFor="email">Email-id</label>
                     <input
-                        type='email'
-                        name='email'
+                        type="email"
+                        name="email"
                         value={email}
                         onChange={onChange}
                         required
                     ></input>
 
-                    <label htmlFor='password'>Password</label>
+                    <label htmlFor="password">Password</label>
                     <input
-                        type='password'
-                        name='password'
+                        type="password"
+                        name="password"
                         value={password}
                         onChange={onChange}
                         required
-                        minLength='6'
+                        minLength="6"
                     ></input>
 
-                    <label htmlFor='confirmPassword'>Confirm Password</label>
+                    <label htmlFor="confirmPassword">Confirm Password</label>
                     <input
-                        type='password'
-                        name='confirmPassword'
+                        type="password"
+                        name="confirmPassword"
                         value={confirmPassword}
                         onChange={onChange}
                         required
                     ></input>
                 </div>
                 <input
-                    type='submit'
-                    value='Register'
-                    className='btn btn-dark'
+                    type="submit"
+                    value="Register"
+                    className="btn btn-dark"
                 ></input>
             </form>
         </div>

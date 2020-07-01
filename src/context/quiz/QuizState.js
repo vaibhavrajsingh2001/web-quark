@@ -2,33 +2,41 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import QuizContext from './quizContext';
 import quizReducer from './quizReducer';
-import { SET_QUIZ, SET_QUIZZES, SET_LEADERBOARD } from '../types';
+import {
+    SET_QUIZ,
+    SET_QUIZZES,
+    SET_LEADERBOARD,
+    SET_QUIZ_FAIL,
+    CLEAR_ERRORS,
+} from '../types';
 
 const QuizState = (props) => {
     const initialState = {
         quizzes: [],
         currentQuiz: [],
         leaderboard: [],
+        error: null,
     };
 
     const [state, dispatch] = useReducer(quizReducer, initialState);
 
     // fetch all quizzes
     const getAllQuizzes = async () => {
-        const res = await axios.get('/api/quiz');
-        if (res) {
+        try {
+            const res = await axios.get('/api/quiz');
             dispatch({ type: SET_QUIZZES, payload: res.data });
+        } catch (err) {
+            dispatch({ type: SET_QUIZ_FAIL, payload: err.response.data.msg });
         }
     };
 
     // fetch individual quiz
     const getQuiz = async (id) => {
-        const res = await axios.get(`/api/quiz/${id}`);
-        if (res) {
-            dispatch({
-                type: SET_QUIZ,
-                payload: res.data,
-            });
+        try {
+            const res = await axios.get(`/api/quiz/${id}`);
+            dispatch({ type: SET_QUIZ, payload: res.data });
+        } catch (err) {
+            dispatch({ type: SET_QUIZ_FAIL, payload: err.response.data.msg });
         }
     };
 
@@ -55,23 +63,31 @@ const QuizState = (props) => {
         };
 
         try {
-            const res = await axios.post('/api/score', {"points":score}, config);
+            const res = await axios.post(
+                '/api/score',
+                { points: score },
+                config
+            );
             console.log(res.data);
         } catch (error) {
             console.error(error);
         }
     };
 
+    const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
     return (
         <QuizContext.Provider
             value={{
                 quizzes: state.quizzes,
                 currentQuiz: state.currentQuiz,
-                leaderboard:state.leaderboard,
+                leaderboard: state.leaderboard,
+                error: state.error,
                 getQuiz,
                 getAllQuizzes,
                 getLeaderboard,
                 sendScore,
+                clearErrors,
             }}
         >
             {props.children}
