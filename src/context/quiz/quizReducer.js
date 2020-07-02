@@ -4,6 +4,7 @@ import {
     SET_LEADERBOARD,
     SET_QUIZ_FAIL,
     CLEAR_ERRORS,
+    CLEAR_QUIZ,
 } from '../types';
 
 export default (state, action) => {
@@ -26,13 +27,18 @@ export default (state, action) => {
         case SET_QUIZ_FAIL:
             return {
                 ...state,
-                error: action.payload
-            }
+                error: action.payload,
+            };
         case CLEAR_ERRORS:
-            return{
+            return {
                 ...state,
-                error: null
-            }
+                error: null,
+            };
+        case CLEAR_QUIZ:
+            return {
+                ...state,
+                currentQuiz: [],
+            };
         default:
             return state;
     }

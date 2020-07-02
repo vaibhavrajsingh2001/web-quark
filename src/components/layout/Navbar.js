@@ -17,7 +17,7 @@ const Navbar = () => {
                 <Link to="/quiz">Quizzes</Link>
             </li>
             <li>
-                <a onClick={onLogout} href="#!" >Logout</a>
+                <Link to='/' onClick={onLogout} href="#!" >Logout</Link>
             </li>
         </Fragment>
     );

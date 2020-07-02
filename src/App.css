@@ -521,6 +521,20 @@ button {
     margin-right: 0.6rem;
 }
 
+.quark {
+    width: 139px;
+    animation: quark-spin infinite 5s alternate-reverse;
+}
+
+@keyframes quark-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(720deg);
+    }
+  }
+
 /* Mobile Styles */
 @media (max-width: 700px) {
     .hide-sm {
@@ -557,7 +571,7 @@ button {
         justify-content: center;
     }
 
-    .navbar a{
+    .navbar a {
         font-size: 1em;
     }
 

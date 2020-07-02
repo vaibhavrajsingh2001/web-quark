@@ -1,4 +1,5 @@
 export const SET_QUIZ = 'SET_QUIZ';
+export const CLEAR_QUIZ = 'CLEAR_QUIZ';
 export const SET_QUIZ_FAIL = 'SET_QUIZ_FAIL';
 export const SET_QUIZZES = 'SET_QUIZZES';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';

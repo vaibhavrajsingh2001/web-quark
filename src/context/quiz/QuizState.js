@@ -8,6 +8,7 @@ import {
     SET_LEADERBOARD,
     SET_QUIZ_FAIL,
     CLEAR_ERRORS,
+    CLEAR_QUIZ,
 } from '../types';
 
 const QuizState = (props) => {
@@ -45,7 +46,6 @@ const QuizState = (props) => {
         try {
             const res = await axios.get('/api/score');
             if (res) {
-                console.log(res.data);
                 dispatch({ type: SET_LEADERBOARD, payload: res.data });
             }
         } catch (err) {
@@ -55,7 +55,6 @@ const QuizState = (props) => {
 
     // update total score of user
     const sendScore = async (score) => {
-        console.log(score);
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -76,6 +75,8 @@ const QuizState = (props) => {
 
     const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
+    const clearQuiz = () => dispatch({ type: CLEAR_QUIZ });
+
     return (
         <QuizContext.Provider
             value={{
@@ -88,6 +89,7 @@ const QuizState = (props) => {
                 getLeaderboard,
                 sendScore,
                 clearErrors,
+                clearQuiz,
             }}
         >
             {props.children}

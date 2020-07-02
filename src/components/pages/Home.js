@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, Fragment } from 'react';
 import AuthContext from '../../context/auth/authContext';
-import quizImg from './quiz.jpg';
+import quark from './quark.png';
 
 const Home = () => {
     const authContext = useContext(AuthContext);
@@ -14,9 +14,13 @@ const Home = () => {
 
     return (
         <Fragment>
-            <div className="container-small">
-                <h1><span className='text-primary'>Hi!</span> Welcome to web-quark!</h1>
-                <img alt='quiz' src={quizImg}></img>
+            <div className="container-small text-center">
+                <h1>
+                    <span className="text-primary">Hi!</span> Welcome to
+                    web-quark!
+                </h1>
+                <br/>
+                <img alt="quiz" src={quark} className='quark'></img>
             </div>
         </Fragment>
     );

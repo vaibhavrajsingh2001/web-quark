@@ -53,14 +53,6 @@ const Quiz = () => {
                         userAnswers[i].toString().toUpperCase()
                     ) {
                         count = count + 10;
-                        console.log(
-                            'Equal' +
-                                userAnswers[i] +
-                                ' ' +
-                                answers[i] +
-                                ' ' +
-                                count
-                        );
                     }
                 }
             }
@@ -85,7 +77,6 @@ const Quiz = () => {
                     <div className="form-container">
                         <h2>{name}</h2>
                         <br />
-                        <br />
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
                                 {quizData[index].imageLink && (
@@ -95,6 +86,7 @@ const Quiz = () => {
                                         alt="img for question"
                                     ></img>
                                 )}
+                                <br />
                                 <label htmlFor={index}>
                                     Q. {questions[index]}
                                 </label>
@@ -104,12 +96,14 @@ const Quiz = () => {
                                     onChange={onChange}
                                 ></input>
                                 <br />
-                                <span
-                                    className="btn btn-dark"
-                                    onClick={() => setIndex(index + 1)}
-                                >
-                                    Next question
-                                </span>
+                                {index < questions.length - 1 && (
+                                    <span
+                                        className="btn btn-dark"
+                                        onClick={() => setIndex(index + 1)}
+                                    >
+                                        Next question
+                                    </span>
+                                )}
                             </div>
                             <input
                                 type="submit"

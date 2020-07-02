@@ -5,10 +5,11 @@ import Spinner from '../layout/Spinner';
 
 const Quizzes = () => {
     const quizContext = useContext(QuizContext);
-    const { quizzes, getAllQuizzes } = quizContext;
+    const { quizzes, getAllQuizzes, clearQuiz } = quizContext;
 
     useEffect(() => {
         getAllQuizzes();
+        clearQuiz();
         // eslint-disable-next-line
     }, []);
 
